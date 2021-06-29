@@ -1,0 +1,16 @@
+spring.jersey.application-path: /engine-rest
+spring.main.banner-mode: "off"
+server:
+  port: 8080
+camunda.bpm:
+  webapp:
+    application-path:
+  admin-user:
+    id: demo
+    password: demo
+    firstName: Demo
+  filter:
+    create: All tasks
+  generic-properties:
+    properties:
+      initializeTelemetry: false
