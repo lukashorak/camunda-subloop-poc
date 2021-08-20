@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0yh3k0c" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <bpmn:process id="Process_1403du6" name="exception" isExecutable="true" camunda:versionTag="1">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1yjif4g</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1yjif4g" sourceRef="StartEvent_1" targetRef="Activity_03gma54" />
+    <bpmn:sequenceFlow id="Flow_199js6p" sourceRef="Activity_008i7sh" targetRef="Activity_1g3wbjb" />
+    <bpmn:userTask id="Activity_1g3wbjb" name="end">
+      <bpmn:incoming>Flow_199js6p</bpmn:incoming>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_008i7sh" name="throw BpmnError" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0mic52r</bpmn:incoming>
+      <bpmn:outgoing>Flow_199js6p</bpmn:outgoing>
+      <bpmn:script>throw new org.camunda.bpm.engine.delegate.BpmnError("SignatureError");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0mic52r" sourceRef="Activity_03gma54" targetRef="Activity_008i7sh" />
+    <bpmn:userTask id="Activity_03gma54" name="start">
+      <bpmn:incoming>Flow_16l6ezm</bpmn:incoming>
+      <bpmn:incoming>Flow_1yjif4g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mic52r</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_1v9bh5h" attachedToRef="Activity_008i7sh">
+      <bpmn:outgoing>Flow_16l6ezm</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_04axt2g" errorRef="Error_1hewgsy" camunda:errorCodeVariable="errorVariable" camunda:errorMessageVariable="errorVariableSignatureError" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_16l6ezm" sourceRef="Event_1v9bh5h" targetRef="Activity_03gma54" />
+    <bpmn:userTask id="Activity_1ux647i" name="error">
+      <bpmn:outgoing>Flow_0s9ptb7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0s9ptb7" sourceRef="Activity_1ux647i" targetRef="Activity_15i0qbk" />
+    <bpmn:task id="Activity_0e4pt9n" name="endEr">
+      <bpmn:incoming>Flow_0wbp92l</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0wbp92l" sourceRef="Activity_15i0qbk" targetRef="Activity_0e4pt9n" />
+    <bpmn:scriptTask id="Activity_15i0qbk" name="throw&#10;Exception" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0s9ptb7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wbp92l</bpmn:outgoing>
+      <bpmn:script>throw new java.lang.Exception("NotGood");</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:error id="Error_1hewgsy" name="SignatureError" errorCode="SignatureError" camunda:errorMessage="SignatureError" />
+  <bpmn:error id="Error_00l2oc4" name="SignatureError" errorCode="SignatureError" camunda:errorMessage="SignatureError" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1403du6">
+      <bpmndi:BPMNEdge id="Flow_1yjif4g_di" bpmnElement="Flow_1yjif4g">
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="400" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_199js6p_di" bpmnElement="Flow_199js6p">
+        <di:waypoint x="630" y="117" />
+        <di:waypoint x="680" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mic52r_di" bpmnElement="Flow_0mic52r">
+        <di:waypoint x="500" y="117" />
+        <di:waypoint x="530" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16l6ezm_di" bpmnElement="Flow_16l6ezm">
+        <di:waypoint x="610" y="175" />
+        <di:waypoint x="610" y="220" />
+        <di:waypoint x="450" y="220" />
+        <di:waypoint x="450" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s9ptb7_di" bpmnElement="Flow_0s9ptb7">
+        <di:waypoint x="780" y="230" />
+        <di:waypoint x="840" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wbp92l_di" bpmnElement="Flow_0wbp92l">
+        <di:waypoint x="940" y="230" />
+        <di:waypoint x="1000" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1lnbf33_di" bpmnElement="Activity_1g3wbjb">
+        <dc:Bounds x="680" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1uwm9kq_di" bpmnElement="Activity_008i7sh">
+        <dc:Bounds x="530" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09pud4h_di" bpmnElement="Activity_03gma54">
+        <dc:Bounds x="400" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12noofx_di" bpmnElement="Activity_1ux647i">
+        <dc:Bounds x="680" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e4pt9n_di" bpmnElement="Activity_0e4pt9n">
+        <dc:Bounds x="1000" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09o5uxn_di" bpmnElement="Activity_15i0qbk">
+        <dc:Bounds x="840" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16uxabu_di" bpmnElement="Event_1v9bh5h">
+        <dc:Bounds x="592" y="139" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

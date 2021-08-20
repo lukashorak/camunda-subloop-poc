@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_06yag80" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <bpmn:process id="scripting" name="scripting" isExecutable="true" camunda:versionTag="1">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="javascript">i = 123;
+str = "SomeText";
+jsonValue = {x: "abc", y:123, in: {deeper: {num: 123, dec: 12.34, str: "abcXyz"}}};
+jsonExample = S(JSON.stringify(jsonValue));
+execution.setVariable("i", i);
+execution.setVariable("str", str);
+execution.setVariable("jsonExample", jsonExample );
+
+</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0cbcv0p</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0cbcv0p" sourceRef="StartEvent_1" targetRef="Activity_0hoca19" />
+    <bpmn:sequenceFlow id="Flow_16vtzbb" sourceRef="Activity_0hoca19" targetRef="Activity_09uvuwi" />
+    <bpmn:userTask id="Activity_0hoca19" name="init">
+      <bpmn:incoming>Flow_0cbcv0p</bpmn:incoming>
+      <bpmn:outgoing>Flow_16vtzbb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_09uvuwi" name="script" scriptFormat="javascript">
+      <bpmn:incoming>Flow_16vtzbb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pdi707</bpmn:outgoing>
+      <bpmn:script>var x = "Test";
+
+var str = execution.getVariable("str");
+y = x + str;
+execution.setVariable("y", y);
+
+var jsonValue = execution.getVariable("jsonExample");
+
+var jsonExample2 = S(jsonValue);
+
+jsonExample2 .prop("city", "Praha")
+jsonExample2.prop("in").prop("city", "Praha")
+
+execution.setVariable("jsonExample2", jsonExample2 );
+
+var dec = jsonExample.jsonPath("$.in.deeper.dec").numberValue().toFixed(2);
+execution.setVariable("dec", dec );
+
+var num = jsonExample.jsonPath("$.in.deeper.num").numberValue();
+execution.setVariable("num", num );
+
+var deeper = S(jsonExample.jsonPath("$.in.deeper").element());
+execution.setVariable("deeper", deeper );</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1pdi707" sourceRef="Activity_09uvuwi" targetRef="Activity_0reic5f" />
+    <bpmn:userTask id="Activity_0reic5f" name="user">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="scriptVariableLocal">
+            <camunda:script scriptFormat="javascript">jsonExample.jsonPath("$.in.deeper.num").numberValue()</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="numValueSpin">${jsonExample.jsonPath("$.in.deeper.num").numberValue()}</camunda:inputParameter>
+          <camunda:inputParameter name="deeperLocalSpin">${S(jsonExample.jsonPath("$.in.deeper").element())}</camunda:inputParameter>
+          <camunda:inputParameter name="deeperLocal">${deeper}</camunda:inputParameter>
+          <camunda:outputParameter name="scriptVariableGlobal">
+            <camunda:script scriptFormat="javascript">scriptVariableLocal</camunda:script>
+          </camunda:outputParameter>
+          <camunda:outputParameter name="numValueSpinOut">${numValueSpin}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pdi707</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mxudwg</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0mxudwg" sourceRef="Activity_0reic5f" targetRef="Activity_18raofn" />
+    <bpmn:endEvent id="Event_06s10vu">
+      <bpmn:incoming>Flow_0aud2la</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0aud2la" sourceRef="Activity_18raofn" targetRef="Event_06s10vu" />
+    <bpmn:userTask id="Activity_18raofn" name="end">
+      <bpmn:incoming>Flow_0mxudwg</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aud2la</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="scripting">
+      <bpmndi:BPMNEdge id="Flow_0cbcv0p_di" bpmnElement="Flow_0cbcv0p">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16vtzbb_di" bpmnElement="Flow_16vtzbb">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="400" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pdi707_di" bpmnElement="Flow_1pdi707">
+        <di:waypoint x="500" y="120" />
+        <di:waypoint x="560" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mxudwg_di" bpmnElement="Flow_0mxudwg">
+        <di:waypoint x="660" y="120" />
+        <di:waypoint x="730" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0aud2la_di" bpmnElement="Flow_0aud2la">
+        <di:waypoint x="830" y="120" />
+        <di:waypoint x="902" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0op2pvp_di" bpmnElement="Activity_0hoca19">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hzx3lg_di" bpmnElement="Activity_09uvuwi">
+        <dc:Bounds x="400" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12owlvs_di" bpmnElement="Activity_0reic5f">
+        <dc:Bounds x="560" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cmngzc_di" bpmnElement="Activity_18raofn">
+        <dc:Bounds x="730" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06s10vu_di" bpmnElement="Event_06s10vu">
+        <dc:Bounds x="902" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
