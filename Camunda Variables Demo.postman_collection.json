@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "08ddc5c3-ca0a-4753-8b03-d6c2f26f5ba4",
+		"name": "Camunda Variables Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LocalVAr",
+			"item": [
+				{
+					"name": "POST StartProcess by Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"variables\": {\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/engine-rest/engine/default/process-definition/key/Process_LocalVariablesDemo/submit-form",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"engine-rest",
+								"engine",
+								"default",
+								"process-definition",
+								"key",
+								"Process_LocalVariablesDemo",
+								"submit-form"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Task (by taskDefinitionKey)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Extract TaskId\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.globals.set(\"taskId\", jsonData[0].id);\r",
+									"    pm.expect(jsonData[0].id);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/engine-rest/engine/default/task?taskDefinitionKey=Activity_DemoLocalVariablesTask&sortBy=created&sortOrder=desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"engine-rest",
+								"engine",
+								"default",
+								"task"
+							],
+							"query": [
+								{
+									"key": "taskDefinitionKey",
+									"value": "Activity_DemoLocalVariablesTask"
+								},
+								{
+									"key": "sortBy",
+									"value": "created"
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Submit Form",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"variables\": {\r\n        \"outApi\": {\r\n            \"value\": \"outApiTest\",\r\n            \"type\": \"String\"\r\n        },\r\n        \"outScriptApi\": {\r\n            \"value\": \"outScriptApiTest\",\r\n            \"type\": \"String\"\r\n        },\r\n        \"outJson\": {\r\n            \"value\": \"{\\\"step3\\\":{\\\"key\\\":\\\"value2\\\"}}\",\r\n            \"type\": \"Json\"\r\n        }\r\n    },\r\n    \"withVariablesInReturn\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/engine-rest/engine/default/task/{{taskId}}/submit-form",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"engine-rest",
+								"engine",
+								"default",
+								"task",
+								"{{taskId}}",
+								"submit-form"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
