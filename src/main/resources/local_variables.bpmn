@@ -52,32 +52,40 @@ execution.setVariableLocal("taskContext", processContext.prop("step2"));</camund
       <bpmn:incoming>Flow_0f3gtvr</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0f3gtvr" sourceRef="Activity_1k55bmf" targetRef="Event_1q1nzse" />
+    <bpmn:callActivity id="Activity_1t99dng" calledElement="oo">
+      <bpmn:extensionElements>
+        <camunda:in source="" />
+      </bpmn:extensionElements>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_LocalVariablesDemo">
       <bpmndi:BPMNEdge id="Flow_07tgx5m_di" bpmnElement="Flow_07tgx5m">
-        <di:waypoint x="188" y="120" />
-        <di:waypoint x="240" y="120" />
+        <di:waypoint x="188" y="300" />
+        <di:waypoint x="240" y="300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13pw13w_di" bpmnElement="Flow_13pw13w">
-        <di:waypoint x="340" y="120" />
-        <di:waypoint x="400" y="120" />
+        <di:waypoint x="340" y="300" />
+        <di:waypoint x="400" y="300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0f3gtvr_di" bpmnElement="Flow_0f3gtvr">
-        <di:waypoint x="500" y="120" />
-        <di:waypoint x="552" y="120" />
+        <di:waypoint x="500" y="300" />
+        <di:waypoint x="552" y="300" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="152" y="102" width="36" height="36" />
+        <dc:Bounds x="152" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_04jn9mo_di" bpmnElement="Activity_DemoLocalVariablesTask">
-        <dc:Bounds x="240" y="80" width="100" height="80" />
+        <dc:Bounds x="240" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fuuou0_di" bpmnElement="Activity_1k55bmf">
-        <dc:Bounds x="400" y="80" width="100" height="80" />
+        <dc:Bounds x="400" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1q1nzse_di" bpmnElement="Event_1q1nzse">
-        <dc:Bounds x="552" y="102" width="36" height="36" />
+        <dc:Bounds x="552" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gqp019_di" bpmnElement="Activity_1t99dng">
+        <dc:Bounds x="280" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
